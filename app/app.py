@@ -3,10 +3,6 @@ import streamlit as st
 # Setup variables
 # os.environ['LANGCHAIN_TRACING_V2'] = st.secrets["openai_api_key"]["tracing"]
 
-#Menu
-WORK_MENU = "Work"
-ABOUT_MENU = "About"
-
 st.set_page_config(
     page_title="Langchain-demo",
     page_icon="📝",
@@ -18,9 +14,38 @@ st.set_page_config(
     }
 )
 
+
+## Pages
+
+def about_demo():
+    import streamlit as st
+    st.markdown(open("README.md", "r").read())
+    st.stop()
+
+
+def work_page():
+    import streamlit as st
+    st.title("Streamlit & Langchain template 📝")
+    st.caption("Using the power of LLMs")
+    question = st.text_area("Research question", placeholder="Question "
+                            "to be  "
+                            "asked?")
+
+    if 'openai_api_key' not in st.session_state:
+        st.info("Please add your OpenAI API key to continue.")
+        st.stop()
+    if not question:
+        st.info("Please enter a question to continue ...")
+    elif st.button("🚄 Perform Request"):
+        # Do what to do
+        st.info("Performing")
+    st.stop()
+
+
+### Main Code
+    
 with st.sidebar:
     st.title("Getting started")
-    menu = st.selectbox("Select pages", [WORK_MENU, ABOUT_MENU], index=0)
 
     if ("openai_api_key" not in st.secrets or
         "openai_api_key" in st.secrets and
@@ -32,9 +57,8 @@ with st.sidebar:
     else:
         st.session_state['openai_api_key'] = st.secrets["openai_api_key"]
 
-    #files = st.file_uploader("Upload your data", accept_multiple_files=True, type=['txt', 'md'])
     st.divider()
-    
+
     options = st.container()
     options.title("Options ⚙️")
 
@@ -42,39 +66,16 @@ with st.sidebar:
     st.session_state['model_to_use'] = model_to_use
     temperature = options.slider('Model Temperature?',min_value=0.0,     max_value=1.0,     step=0.1,     value=0.7)
     st.session_state['temperature'] = temperature
+    st.divider()
+
+    ## -------- Pages  ----------
+    page_names_to_funcs = {
+        "Work": work_page,
+        "About": about_demo,
+    }
+    demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
     
     st.divider()
     st.markdown("Made with ❤️ by [Mahdi HARZALLAH](https://www.linkedin.com/in/mahdi-harzallah/)")
 
-if menu == ABOUT_MENU:
-    st.markdown(open("README.md", "r").read())
-    st.stop()
-
-if menu == WORK_MENU:
-    st.title("Streamlit & Langchain template 📝")
-    st.caption("Using the power of LLMs")
-    question = st.text_area("Research question", placeholder="Question "
-                            "to be  "
-                            "asked?")
-
-    if not question:
-        st.info("Please enter a question to continue ...")
-    elif st.button("🚄 Perform Request"):
-        # Do what to do
-        st.info("Performing")
-    st.stop()
-
-#if not files:
-#    st.info("Please upload some qualitative data in the sidebar")
-#    st.stop()
-
-if 'openai_api_key' not in st.session_state:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
-
-
-    # --- 
-    # TODO
-
-    # --- 
-    # DONE
+page_names_to_funcs[demo_name]()
