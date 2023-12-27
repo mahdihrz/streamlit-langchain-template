@@ -85,7 +85,7 @@ with st.sidebar:
     options = st.container()
     options.title("Options ⚙️")
 
-    model_to_use = options.selectbox("Select model", ["gpt-3.5-turbo-16k", "gpt-4-1106-preview"], index=0)
+    model_to_use = options.selectbox("Select model", ["gpt-3.5-turbo-16k", "gpt-3.5-turbo-1106", "gpt-4-32k-0613", "gpt-4-1106-preview"], index=1)
     st.session_state['model_to_use'] = model_to_use
     temperature = options.slider('Model Temperature?',min_value=0.0,     max_value=1.0,     step=0.1,     value=0.7)
     st.session_state['temperature'] = temperature
