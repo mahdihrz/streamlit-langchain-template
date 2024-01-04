@@ -1,6 +1,7 @@
 import streamlit as st
 
 from SystemHumanMessage import work_page
+from ArticleGenerator import article_generator_core_ui
 # Setup variables
 # os.environ['LANGCHAIN_TRACING_V2'] = st.secrets["openai_api_key"]["tracing"]
 # -----------------------------------------------------------------------------------------------------------
@@ -35,6 +36,15 @@ with st.sidebar:
     else:
         st.session_state['openai_api_key'] = st.secrets["openai_api_key"]
 
+    # -------- Pages  ----------
+    page_names_to_funcs = {
+        "Work": work_page,
+        "Article Generator" : article_generator_core_ui,
+        "About": about_demo,
+    }
+    demo_name = st.sidebar.selectbox(
+        "Choose a demo", page_names_to_funcs.keys(), index=0)
+
     st.divider()
 
     options = st.container()
@@ -47,16 +57,6 @@ with st.sidebar:
     temperature = options.slider(
         'Model Temperature?', min_value=0.0,     max_value=1.0,     step=0.1,     value=0.7)
     st.session_state['temperature'] = temperature
-    st.divider()
-
-    # -------- Pages  ----------
-    page_names_to_funcs = {
-        "Work": work_page,
-        "About": about_demo,
-    }
-    demo_name = st.sidebar.selectbox(
-        "Choose a demo", page_names_to_funcs.keys(), index=0)
-
     st.divider()
     st.markdown(
         "Made with ❤️ by [Mahdi HARZALLAH](https://www.linkedin.com/in/mahdi-harzallah/)")
