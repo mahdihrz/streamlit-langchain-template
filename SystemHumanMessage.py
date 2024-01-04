@@ -3,19 +3,18 @@ from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
 
 def apply_template():
-    match st.session_state['templateSystem'] :
-        case "Langchain programmer":
-            st.session_state['systemMessageQuestion']= "You are a helpful python, langchain and openai programmer."
-            st.session_state['HumanMessageQuestion']= "Suggest some basic ideas of usage of langchain and openai and generate their code."
-        case "Java programmer":
+    if "Langchain programmer" == st.session_state['templateSystem']:
+        st.session_state['systemMessageQuestion']= "You are a helpful python, langchain and openai programmer."
+        st.session_state['HumanMessageQuestion']= "Suggest some basic ideas of usage of langchain and openai and generate their code."
+    elif "Java programmer" == st.session_state['templateSystem']:
             st.session_state['systemMessageQuestion'] = "You are a helpful java programmer."
             st.session_state['HumanMessageQuestion']= "Suggest some basic ideas of usage of Java and Spring framework, and generate their code."
-        case "Expo.io & React Native programmer":
-            st.session_state['systemMessageQuestion'] = "You are a helpful Expo.io and React Native programmer."
-            st.session_state['HumanMessageQuestion']= "Suggest some basic ideas of usage of Expo.io framework, and generate their code."
-        case "Travel Planner":
-            st.session_state['systemMessageQuestion'] = "You are a helpful Travel Planner."
-            st.session_state['HumanMessageQuestion']= "I am traveling to Bali suggest a plan for visit."
+    elif "Expo.io & React Native programmer" == st.session_state['templateSystem']:
+        st.session_state['systemMessageQuestion'] = "You are a helpful Expo.io and React Native programmer."
+        st.session_state['HumanMessageQuestion']= "Suggest some basic ideas of usage of Expo.io framework, and generate their code."
+    elif "Travel Planner" == st.session_state['templateSystem']:
+        st.session_state['systemMessageQuestion'] = "You are a helpful Travel Planner."
+        st.session_state['HumanMessageQuestion']= "I am traveling to Bali suggest a plan for visit."
 
 def work_page():
     import streamlit as st

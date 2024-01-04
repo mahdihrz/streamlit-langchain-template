@@ -2,9 +2,6 @@ import streamlit as st
 
 from SystemHumanMessage import work_page
 from ArticleGenerator import article_generator_core_ui
-# Setup variables
-# os.environ['LANGCHAIN_TRACING_V2'] = st.secrets["openai_api_key"]["tracing"]
-# -----------------------------------------------------------------------------------------------------------
 
 st.set_page_config(
     page_title="Langchain-demo",
