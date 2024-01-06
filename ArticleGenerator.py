@@ -45,7 +45,7 @@ def article_generator_core_ui():
     st.title("Article generator 📝")
     st.caption("In this example we use SingleChain to generate an article")
     subject = st.text_area("Subject")
-    language = st.text_input("Language", value="French")
+    language = st.text_input("Language", value="English")
     number_of_sections = st.number_input('Number of sections', min_value = 1, max_value= 5, value = 2, step = 1)
     max_token = st.number_input('Max tokens per section', min_value = 100, max_value= 10000, value = 150, step = 10)
 
